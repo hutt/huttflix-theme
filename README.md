@@ -65,14 +65,20 @@ Easily enabled by uncommenting CSS sections:
 
 All colors are defined as CSS variables at the top of the file. To customize:
 
-1. Locate the `:root` section (around line 14)
+1. Locate the `:root` section
 2. Modify the color variables:
 
 ```css
 :root {
-    --accent-red: #ff000d;              /* Primary red for hover & active states */
-    --accent-dark-red: #850007;         /* Dark red for buttons & highlights */
-    --accent-darker-red: #6a0006;       /* Darkest red for active states */
+    --jf-palette-primary-main: #850007;
+    --jf-palette-primary-light: #ff000d;
+    --jf-palette-primary-dark: #6a0006;
+
+    --red-10: rgba(133, 0, 7, 0.1);
+    --red-20: rgba(133, 0, 7, 0.2);
+    --red-30: rgba(133, 0, 7, 0.3);
+    --red-50: rgba(133, 0, 7, 0.5);
+    --red-80: rgba(133, 0, 7, 0.8);
     /* ... */
 }
 ```
@@ -113,45 +119,6 @@ Your custom logos will now appear in:
 - Sidebar drawer
 - Loading screen
 - Browser favicon (where supported)
-
-### Enabling Optional Features
-
-The theme includes optional features that can be enabled by uncommenting specific sections at the end of the CSS file:
-
-#### Darker Background
-
-For enhanced contrast, uncomment lines ~1120-1126:
-
-```css
-body {
-    background-color: #141414 !important;
-}
-
-.backgroundContainer {
-    background-color: #141414 !important;
-}
-```
-
-#### Larger Play Icons
-
-Make play icons on media cards more prominent, uncomment lines ~1131-1135:
-
-```css
-.cardOverlayButton-icon {
-    font-size: 3em !important;
-}
-```
-
-#### Stronger Backdrop Blur
-
-Increase blur effect on dialogs and popups, uncomment lines ~1140-1144:
-
-```css
-.dialogBackdrop {
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-}
-```
 
 ## Compatibility
 

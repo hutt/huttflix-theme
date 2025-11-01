@@ -1,1066 +1,346 @@
 /* ==========================================
    JELLYFIN HUTTFLIX THEME
-   Version: 1.0 for Jellyfin 10.11.1
+   Version: 1.1 for Jellyfin 10.11.1
    
    Description: Replaces default blue accent colors with red tones
    Compatibility: Jellyfin Web Client 10.10 & 10.11, Editor's Choice Plugin
    ========================================== */
 
-/* ==========================================
-   PART 1: CSS VARIABLES
-   Core color definitions and customization
-   ========================================== */
-
 :root {
-    /* ------------------------------------------
-       Primary color definitions
-       ------------------------------------------ */
-    --accent-red: #ff000d;              /* Primary red for hover & active states */
-    --accent-dark-red: #850007;         /* Dark red for buttons & highlights */
-    --accent-darker-red: #6a0006;       /* Darkest red for active states */
-    
-    /* ------------------------------------------
-       Transparent color variants
-       ------------------------------------------ */
-    --red-10: rgba(133, 0, 7, 0.1);     /* 10% opacity for subtle backgrounds */
-    --red-20: rgba(133, 0, 7, 0.2);     /* 20% opacity for hover effects */
-    --red-30: rgba(133, 0, 7, 0.3);     /* 30% opacity for active areas */
-    --red-50: rgba(133, 0, 7, 0.5);     /* 50% opacity for overlays */
-    --red-80: rgba(133, 0, 7, 0.8);     /* 80% opacity for tags & labels */
-    
-    /* ------------------------------------------
-       Additional theme colors
-       ------------------------------------------ */
-    --text-white: #ffffff;              /* White text color */
-    --text-muted: #b3b3b3;              /* Muted text color (gray) */
-    --icon-watched: #404040;            /* Dark gray for "watched" status */
-    --overlay-bg: rgba(20, 20, 20, 0.8); /* Overlay background for icon buttons */
-    
-    /* ------------------------------------------
-       Logo & branding URLs
-       Update these URLs to use your custom logos
-       ------------------------------------------ */
-    --logo-light: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/banner-light.png');  /* Light logo for dark backgrounds */
-    --logo-dark: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/banner-dark.png');    /* Dark logo for light backgrounds */
-    --logo-icon: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/icon-transparent.png'); /* Transparent icon/favicon */
-    
-    /* ------------------------------------------
-       Override native Jellyfin CSS variables
-       ------------------------------------------ */
-    --theme-primary-color: var(--accent-red);
-    --theme-accent-color: var(--accent-dark-red);
-    --accent: var(--accent-red);
-    --accent-dark: var(--accent-dark-red);
+    --logo-light: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/banner-light.png');
+    --logo-dark: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/banner-dark.png');
+    --logo-icon: url('https://raw.githubusercontent.com/hutt/huttflix-theme/refs/heads/main/logos/icon-transparent.png');
+
+    --jf-palette-primary-main: #850007;
+    --jf-palette-primary-light: #ff000d;
+    --jf-palette-primary-dark: #6a0006;
+
+    --red-10: rgba(133, 0, 7, 0.1);
+    --red-20: rgba(133, 0, 7, 0.2);
+    --red-30: rgba(133, 0, 7, 0.3);
+    --red-50: rgba(133, 0, 7, 0.5);
+    --red-80: rgba(133, 0, 7, 0.8);
+
+    --text-white: #ffffff;
+    --text-muted: #b3b3b3;
+    --icon-watched: #404040;
+    --overlay-bg: rgba(20, 20, 20, 0.8);
 }
 
 /* ==========================================
-   PART 1A: LOGO & BRANDING
-   Custom logo replacements
+   LOGOS
    ========================================== */
-
-/* ------------------------------------------
-   Login page logo
-   ------------------------------------------ */
-.pageTitleWithLogo {
-    background-image: var(--logo-light) !important;
-}
-
-/* ------------------------------------------
-   Header/navigation logo
-   ------------------------------------------ */
-.pageTitleWithDefaultLogo {
-    background-image: var(--logo-light) !important;
-}
-
+.pageTitleWithLogo,
+.pageTitleWithDefaultLogo,
 .headerLogo,
 .pageTitle.pageTitleWithLogo,
-.pageTitle.pageTitleWithDefaultLogo {
-    background-image: var(--logo-light) !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-}
-
-/* ------------------------------------------
-   Sidebar/drawer logo
-   ------------------------------------------ */
+.pageTitle.pageTitleWithDefaultLogo,
 .drawerLogo,
-.navDrawerLogo {
+.navDrawerLogo,
+.mainDrawerLogo,
+.splashScreenLogo,
+.splashBackground,
+.errorLogo,
+.offlineLogo,
+.dashboardLogo,
+.serverSelectionLogo,
+.selectServerLogo,
+.wizardLogo {
     background-image: var(--logo-light) !important;
     background-size: contain !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
 }
 
-/* ------------------------------------------
-   Loading screen logo
-   ------------------------------------------ */
-.splashScreenLogo,
-.docspicture {
-    background-image: var(--logo-light) !important;
+/* Image-based logos */
+.loginDisclaimer .imageContainer img,
+.disclaimerContainer .imageContainer img,
+.imgLogoIcon,
+.adminDrawerLogo img,
+.headerLogo img,
+.mainLogo {
     content: var(--logo-light) !important;
 }
 
-/* ------------------------------------------
-   Favicon (browser support varies)
-   ------------------------------------------ */
-/* Note: Favicons are typically set via HTML,
-   but some browsers support CSS override */
-link[rel="icon"],
-link[rel="shortcut icon"] {
-    content: var(--logo-icon) !important;
+/* Adjust logo in header navbar */
+.pageTitleWithLogo {
+    margin-left: 0 !important;
+    width: 6em;
 }
 
+
 /* ==========================================
-   PART 2: NAVIGATION & SIDEBAR
+   NAVIGATION & SIDEBAR
    Left sidebar and navigation elements
    ========================================== */
 
 /* ------------------------------------------
    Main navigation (left sidebar)
    ------------------------------------------ */
+/* Keep text and icons white */
+.mainDrawer .navMenuOption,
+.mainDrawer .navMenuOption .material-icons {
+    color: var(--text-white) !important;
+}
+
 /* Selected navigation item */
-.navMenuOption-selected {
-    background-color: var(--accent-dark-red) !important;
-    border-left: 4px solid var(--accent-red) !important;
+.mainDrawer .navMenuOption-selected {
+    background-color: var(--jf-palette-primary-main) !important;
+    border-left: 4px solid var(--jf-palette-primary-light) !important;
 }
 
 /* Navigation hover effect */
-.navMenuOption:hover {
+.mainDrawer .navMenuOption:hover {
     background-color: var(--red-30) !important;
+    border-left: 4px solid var(--jf-palette-primary-light) !important;
     transition: background-color 0.2s ease;
-}
-
-/* Keep text and icons white */
-.navMenuOption,
-.navMenuOption span,
-.navMenuOption .material-icons {
-    color: var(--text-white) !important;
 }
 
 /* ------------------------------------------
    User menu (profile dropdown)
    ------------------------------------------ */
-.userMenuOptions .listItem:hover,
-.userMenuOptions .navMenuOption:hover {
-    background-color: var(--red-30) !important;
+/* Keep text and icons white */
+.userPreferencesPage .emby-button,
+.userPreferencesPage .emby-button .material-icons {
+    color: var(--text-white) !important;
 }
 
-.userMenuOptions .listItem-selected,
-.userMenuOptions .navMenuOption-selected {
-    background-color: var(--accent-dark-red) !important;
-    border-left: 4px solid var(--accent-red) !important;
+/* Navigation hover effect */
+.userPreferencesPage .listItem:hover {
+    background-color: var(--red-30) !important;
+    /*transition: background-color 0.2s ease;*/
 }
 
 /* ------------------------------------------
-   User preferences menu (/mypreferencesmenu)
-   Keep icons and text white
+   Action Sheet / Context Menu
    ------------------------------------------ */
-.preferenceMenuItem,
-.listItem.listItem-button {
+/* Keep text and icons white */
+.actionSheetContent .emby-button,
+.actionSheetContent .emby-button .material-icons {
     color: var(--text-white) !important;
 }
 
-.preferenceMenuItem .listItemIcon,
-.preferenceMenuItem .material-icons,
-.listItem-button .listItemIcon,
-.listItem-button .material-icons {
-    color: var(--text-white) !important;
-}
-
-.preferenceMenuItem .listItemBody,
-.listItem-button .listItemBody {
-    color: var(--text-white) !important;
-}
-
-/* Hover state: change background, keep text/icons white */
-.preferenceMenuItem:hover,
-.listItem.listItem-button:hover {
+/* Navigation hover effect */
+.actionSheetContent .listItem:hover {
     background-color: var(--red-30) !important;
-}
-
-.preferenceMenuItem:hover .listItemIcon,
-.preferenceMenuItem:hover .material-icons,
-.listItem-button:hover .listItemIcon,
-.listItem-button:hover .material-icons {
-    color: var(--text-white) !important;
+    /*transition: background-color 0.2s ease;*/
 }
 
 /* ==========================================
-   PART 3: HEADER & TOP NAVIGATION
+   HEADER & TOP NAVIGATION
    Top header bar and icon buttons
    ========================================== */
 
 /* ------------------------------------------
    Header buttons (left and right icons)
    ------------------------------------------ */
-.headerButton:hover,
-.headerBackButton:hover,
-.headerHomeButton:hover,
-.mainDrawerButton:hover,
-.barsMenuButton:hover,
-.headerSyncButton:hover,
-.syncButton:hover,
-.headerAudioPlayerButton:hover,
-.audioPlayerButton:hover,
-.headerCastButton:hover,
-.castButton:hover,
-.headerSearchButton:hover,
-.headerUserButton:hover {
+.headerButton:hover {
     background-color: var(--overlay-bg) !important;
-    color: var(--accent-red) !important;
+    color: var(--jf-palette-primary-light) !important;
     transition: all 0.2s ease;
-}
-
-/* Active state for header buttons */
-.headerButton:active,
-.headerBackButton:active,
-.headerHomeButton:active,
-.mainDrawerButton:active,
-.barsMenuButton:active {
-    background-color: rgba(40, 40, 40, 0.9) !important;
-    color: var(--accent-red) !important;
-}
-
-/* Material icons in header buttons */
-.headerButton:hover .material-icons,
-.headerButton:active .material-icons {
-    color: var(--accent-red) !important;
-}
-
-/* ==========================================
-   PART 4: TABS & SEGMENTS
-   Tab navigation and segmented controls
-   ========================================== */
-
-/* Active tabs with red underline */
-.emby-tab-button.emby-tab-button-active {
-    color: var(--accent-red) !important;
-    border-bottom: 3px solid var(--accent-red) !important;
 }
 
 /* Tab hover effect */
-.emby-tab-button:hover {
-    color: var(--accent-red) !important;
+.headerTabs .emby-tab-button:hover {
+    color: var(--jf-palette-primary-light) !important;
     transition: color 0.2s ease;
 }
 
-/* Active segmented buttons */
-.segmented-button-active {
-    background-color: var(--accent-dark-red) !important;
-    color: var(--text-white) !important;
+/* Transparent top menu */
+.skinHeader.focuscontainer-x.skinHeader-withBackground.skinHeader-blurred {
+    background: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.skinHeader.focuscontainer-x.skinHeader-withBackground.skinHeader-blurred.noHomeButtonHeader {
+    background: none;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================
-   PART 5: BUTTONS & INTERACTIVE ELEMENTS
+   BUTTONS & INTERACTIVE ELEMENTS
    All button types and interactive controls
    ========================================== */
-
-/* ------------------------------------------
-   Primary action buttons (Play, Resume)
-   ------------------------------------------ */
-.detailButton-primary,
-.btnResume,
-.btnPlay,
-.button-flat-accent {
-    background-color: var(--accent-red) !important;
-    color: var(--text-white) !important;
-    font-weight: bold;
-    border: none !important;
-    transition: background-color 0.2s ease, filter 0.2s ease;
+/* Cards */
+/* Card Overlay Buttons */
+.card-hoverable:hover .cardOverlayContainer .cardOverlayButton-hover:hover {
+    color: var(--jf-palette-primary-light);
+    background-color: var(--overlay-bg);
 }
 
-.detailButton-primary:hover,
-.btnResume:hover,
-.btnPlay:hover,
-.button-flat-accent:hover {
-    background-color: var(--accent-red) !important;
-    filter: brightness(1.2);
+/* Progress Bar */
+.itemProgressBarForeground {
+    background-color: var(--jf-palette-primary-light);
 }
 
-/* ------------------------------------------
-   Submit & raised buttons
-   ------------------------------------------ */
-.button-submit,
-.raised.button-submit,
-.raisedButton {
-    background-color: var(--accent-dark-red) !important;
-    transition: background-color 0.2s ease;
+/* Checkboxes */
+.emby-checkbox:checked+span+.checkboxOutline {
+    background-color: var(--jf-palette-primary-light);
+    border-color: var(--jf-palette-primary-light);
 }
 
-.button-submit:hover,
-.raised.button-submit:hover,
-.raisedButton:hover {
-    background-color: var(--accent-red) !important;
+.emby-checkbox:checked:hover+span+.checkboxOutline {
+    background-color: var(--jf-palette-primary-main);
+    border-color: var(--jf-palette-primary-main);
 }
 
-.button-submit:active,
-.raised.button-submit:active {
-    background-color: var(--accent-darker-red) !important;
+/* Submit Buttons */
+.button-submit {
+    background: var(--jf-palette-primary-light);
+    color: var(--text-white);
 }
 
-/* ------------------------------------------
-   FAB buttons (floating action buttons)
-   ------------------------------------------ */
-.fab {
-    background-color: var(--accent-dark-red) !important;
-    transition: background-color 0.2s ease;
+.button-submit:hover {
+    background: var(--jf-palette-primary-main);
+    color: var(--text-white);
 }
 
-.fab:hover {
-    background-color: var(--accent-red) !important;
+/* Dropdowns */
+.emby-select-withcolor {}
+
+.emby-select-withcolor:focus {
+    border-color: var(--jf-palette-primary-main) !important;
 }
 
-/* ------------------------------------------
-   Icon-only buttons (site-wide)
-   ------------------------------------------ */
-.paper-icon-button-light:focus {
+/* Inputs */
+.emby-input,
+.emby-textarea {}
+
+.emby-input:focus,
+.emby-textarea:focus {
+    border-color: var(--jf-palette-primary-main);
+}
+
+/* Input Labels */
+.inputLabelFocused,
+.selectLabelFocused,
+.textareaLabelFocused {
+    color: var(--jf-palette-primary-light);
+}
+
+/* Make count indicator icon dark and transparent */
+.countIndicator {
+    background: #00000058;
+}
+
+/* Icons */
+.paper-icon-button-light {
+    color: var(--text-white);
+}
+
+.paper-icon-button-light:hover {
     background-color: var(--overlay-bg) !important;
-    color: var(--accent-red) !important;
-}
-
-.paper-icon-button-light:hover:not(:disabled) {
-    color: var(--accent-red) !important;
-    background-color: var(--overlay-bg) !important;
+    color: var(--jf-palette-primary-light) !important;
     transition: all 0.2s ease;
 }
 
-/* ==========================================
-   PART 6: CARDS & MEDIA ELEMENTS
-   Media cards and overlay buttons
-   ========================================== */
+/* Icons auf Detailseite */
+.detailRibbon .mainDetailButtons .detailButton {}
 
-/* ------------------------------------------
-   Card hover effects
-   ------------------------------------------ */
-/* Subtle border on hover - no scale transform */
-.card:hover,
-.card-hoverable:hover {
-    border-color: rgba(255, 0, 13, 0.5) !important;
-    transition: border-color 0.2s ease;
-}
-
-/* ------------------------------------------
-   Card overlay buttons
-   ------------------------------------------ */
-.cardOverlayContainer {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-}
-
-/* Individual overlay buttons (play, mark watched, favorite, etc.) */
-.cardOverlayButton,
-.cardOverlayButton-hover {
-    background-color: var(--overlay-bg) !important;
-    color: var(--text-white) !important;
-    transition: background-color 0.2s ease;
-}
-
-.cardOverlayButton:hover,
-.cardOverlayButton-hover:hover {
-    background-color: rgba(40, 40, 40, 0.9) !important;
-    color: var(--text-white) !important;  /* Keep white, don't turn red */
-}
-
-/* Important: all icons on cards remain white */
-.card:hover .paper-icon-button-light,
-.card-hoverable:hover .paper-icon-button-light,
-.cardOverlayButton .material-icons {
-    color: var(--text-white) !important;
-}
-
-/* ------------------------------------------
-   Watched/unwatched indicators
-   ------------------------------------------ */
-/* Watched indicator: dark gray */
-.playedIndicator {
-    background-color: var(--icon-watched) !important;
-}
-
-/* Unwatched indicator: white */
-.cardOverlayButton .playedIndicator {
-    background-color: var(--text-white) !important;
-}
-
-/* Icon colors for mark played button */
-.itemAction.paper-icon-button-light[data-action="markplayed"] {
-    color: var(--text-white) !important;
-}
-
-.itemAction.paper-icon-button-light[data-action="markplayed"].playedIndicator {
-    color: var(--icon-watched) !important;
-}
-
-/* ------------------------------------------
-   Card text & names
-   ------------------------------------------ */
-/* Movie/series names on cards remain normal (not red) */
-.cardText a,
-.cardText-first a {
-    color: inherit !important;
-}
-
-.cardText a:hover,
-.cardText-first a:hover {
-    color: inherit !important;
-    text-decoration: underline;
-}
-
-/* ==========================================
-   PART 7: DETAIL PAGES
-   Item detail pages and related elements
-   ========================================== */
-
-/* ------------------------------------------
-   Backdrop & background
-   ------------------------------------------ */
-/* Darken backdrop images for better readability */
-.backdropImage {
-    filter: brightness(0.4);
-}
-
-/* ------------------------------------------
-   Dropdowns - no colored borders in any state
-   ------------------------------------------ */
-.emby-select,
-.emby-select-withcolor,
-select.emby-select {
-    border-color: transparent !important;
-}
-
-/* All states: normal, focus, hover, active */
-.emby-select:focus,
-.emby-select:hover,
-.emby-select:active,
-.emby-select-withcolor:focus,
-.emby-select-withcolor:hover,
-.emby-select-withcolor:active,
-select.emby-select:focus,
-select.emby-select:hover,
-select.emby-select:active {
-    border-color: transparent !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-/* ------------------------------------------
-   Links & text on detail pages
-   ------------------------------------------ */
-/* Tags below description: normal text color */
-#itemDetailPage .itemTags a,
-.itemTags.focuscontainer-x a {
-    color: inherit !important;
-}
-
-#itemDetailPage .itemTags a:hover,
-.itemTags.focuscontainer-x a:hover {
-    color: inherit !important;
-    text-decoration: underline;
-}
-
-/* External links (IMDB/TMDB): normal text color */
-#itemDetailPage .itemExternalLinks a,
-.itemExternalLinks.focuscontainer-x a {
-    color: inherit !important;
-}
-
-#itemDetailPage .itemExternalLinks a:hover,
-.itemExternalLinks.focuscontainer-x a:hover {
-    color: inherit !important;
-    text-decoration: underline;
-}
-
-/* Next up episode names: normal text color */
-#itemDetailPage .nextUpSection .cardText a {
-    color: inherit !important;
-}
-
-#itemDetailPage .nextUpSection .cardText a:hover {
-    color: inherit !important;
-    text-decoration: underline;
-}
-
-/* Season names: normal text color */
-#itemDetailPage .itemsContainer .cardText a {
-    color: inherit !important;
-}
-
-/* Cast & crew person names: normal text color */
-#castContent .cardText a,
-.castContent .cardText a {
-    color: inherit !important;
-}
-
-/* "More like this" movie/series names: normal text color */
-#similarCollapsible .cardText a {
-    color: inherit !important;
-}
-
-/* ------------------------------------------
-   Info labels & tags
-   ------------------------------------------ */
-/* Item tags (e.g., genre tags) with red background */
-.itemTag {
-    background-color: var(--red-80) !important;
-    padding: 4px 8px;
-    border-radius: 3px;
-}
-
-/* IMPORTANT: Media info items (year, rating, etc.) NOT changed */
-/* This rule is intentionally NOT set:
-.mediaInfoItem,
-.mediaInfoText {
-    background-color: ... !important;
-}
-*/
-
-/* ------------------------------------------
-   Cast & crew placeholders
-   ------------------------------------------ */
-/* All default card backgrounds: dark gray instead of blue */
-.defaultCardBackground,
-.defaultCardBackground1,
-.defaultCardBackground2,
-.defaultCardBackground3,
-.defaultCardBackground4,
-.defaultCardBackground5 {
-    background-color: #2a2a2a !important;
-}
-
-/* Person icon in placeholders: dark red */
-#castContent .cardScalable .material-icons,
-.castContent .cardScalable .material-icons,
-.defaultCardBackground .material-icons {
-    color: var(--accent-dark-red) !important;
-}
-
-/* ==========================================
-   PART 8: FORMS & INPUT FIELDS
-   Text inputs, checkboxes, and form controls
-   ========================================== */
-
-/* ------------------------------------------
-   Text inputs & textareas
-   ------------------------------------------ */
-.emby-input,
-.emby-textarea {
-    border-color: var(--accent-dark-red) !important;
-    transition: border-color 0.2s ease;
-}
-
-/* Focus state: red instead of blue */
-.emby-input:focus,
-.emby-textarea:focus {
-    border-color: var(--accent-red) !important;
-    box-shadow: 0 0 0 2px var(--red-20);
-}
-
-/* ------------------------------------------
-   Checkboxes & radio buttons
-   ------------------------------------------ */
-/* Checked state: dark red */
-.emby-checkbox:checked + span + .checkboxOutline,
-.listItemIcon.listItemIcon-transparent.checkboxOutline.emby-checkbox-iconOutline-checked {
-    background-color: var(--accent-dark-red) !important;
-    border-color: var(--accent-dark-red) !important;
-}
-
-.emby-radio:checked + span + .checkboxOutline {
-    background-color: var(--accent-dark-red) !important;
-    border-color: var(--accent-dark-red) !important;
-}
-
-/* ------------------------------------------
-   Toggle switches
-   ------------------------------------------ */
-.toggleButton-checked {
-    background-color: var(--accent-dark-red) !important;
-    transition: background-color 0.2s ease;
-}
-
-.toggleButton-checked:hover {
-    background-color: var(--accent-red) !important;
-}
-
-/* ==========================================
-   PART 9: LINKS
-   Only change links that are blue in original theme
-   ========================================== */
-
-a.button-link,
-a.emby-button,
-.listItem a.listItemBody,
-.raised a {
-    color: var(--accent-red);
-    transition: color 0.2s ease;
-}
-
-a.button-link:hover,
-a.emby-button:hover,
-.listItem a.listItemBody:hover,
-.raised a:hover {
-    color: var(--accent-red);
-    filter: brightness(1.2);
-}
-
-/* Text action links in lists */
-.textActionButton:not(.cardText .textActionButton) {
-    color: var(--accent-red) !important;
-}
-
-/* ==========================================
-   PART 10: PROGRESS BARS & SLIDERS
-   Progress indicators and slider controls
-   ========================================== */
-
-/* ------------------------------------------
-   Playback progress bars
-   ------------------------------------------ */
-.itemProgressBar {
-    background-color: rgba(255, 255, 255, 0.3) !important;
-    height: 4px !important;
-}
-
-.itemProgressBarForeground {
-    background-color: var(--accent-red) !important;
+.detailRibbon .mainDetailButtons .detailButton:hover {
+    color: var(--jf-palette-primary-light) !important;
 }
 
 /* ------------------------------------------
    Loading spinner
    ------------------------------------------ */
-.mdl-spinner__layer-1 {
-    border-color: var(--accent-red) !important;
-}
-
-.mdl-spinner__layer-2 {
-    border-color: var(--accent-dark-red) !important;
-}
-
-/* ------------------------------------------
-   Video player slider
-   ------------------------------------------ */
-/* Slider thumb (all browsers) */
-.mdl-slider::-webkit-slider-thumb {
-    background: var(--accent-red) !important;
-    border: 2px solid var(--text-white) !important;
-}
-
-.mdl-slider::-moz-range-thumb {
-    background: var(--accent-red) !important;
-    border: 2px solid var(--text-white) !important;
-}
-
-.mdl-slider::-ms-thumb {
-    background: var(--accent-red) !important;
-    border: 2px solid var(--text-white) !important;
-}
-
-/* Slider track */
-.mdl-slider__background-lower {
-    background-color: var(--accent-red) !important;
-}
-
-.mdl-slider__background-upper {
-    background-color: rgba(255, 255, 255, 0.3) !important;
-}
-
-/* Slider bubble (tooltip) */
-.sliderBubble {
-    background-color: var(--accent-dark-red) !important;
+.mdl-spinner__layer-1,
+.mdl-spinner__layer-2,
+.mdl-spinner__layer-3,
+.mdl-spinner__layer-4 {
+    border-color: var(--jf-palette-primary-light) !important;
 }
 
 /* ==========================================
-   PART 11: VIDEO PLAYER
-   Video playback controls and OSD
+   VIDEO PLAYER
    ========================================== */
-
-/* ------------------------------------------
-   Player controls
-   ------------------------------------------ */
-/* OSD bottom gradient */
-.videoOsdBottom {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent) !important;
+.osdControls .mdl-slider-background-lower {
+    background-color: var(--jf-palette-primary-light);
 }
 
-/* Player buttons */
-.btnCommand:hover,
-.paper-icon-button-light.btnCommand:hover {
-    color: var(--accent-red) !important;
-    background-color: var(--red-20) !important;
-    transition: all 0.2s ease;
+.osdControls .mdl-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 1.08em;
+    height: 1.08em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--jf-palette-primary-light);
+    border: none;
+    transition: 0.2s;
+    pointer-events: none;
 }
 
-/* Now playing bar */
-.nowPlayingBarCurrentTime,
-.nowPlayingBarTotalTime {
-    color: var(--accent-red) !important;
+.osdControls .mdl-slider::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 1.08em;
+    height: 1.08em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--jf-palette-primary-light);
+    background-image: none;
+    border: none;
+    transition: 0.2s;
 }
 
-/* ==========================================
-   PART 12: BADGES, COUNTERS & INDICATORS
-   Notification badges and count indicators
-   ========================================== */
-
-/* Count indicators (e.g., number of unwatched episodes) */
-.countIndicator {
-    background-color: var(--accent-dark-red) !important;
-    border-radius: 3px;
+.osdControls .mdl-slider::-ms-thumb {
+    -webkit-appearance: none;
+    width: 1.4em;
+    height: 1.4em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--jf-palette-primary-light);
+    border: none;
+    transform: scale(0.771429);
+    transition: 0.2s;
 }
 
-/* New content badge */
-.badge {
-    background-color: var(--accent-red) !important;
-}
+`
 
-/* ==========================================
-   PART 13: SCROLLBARS
-   Custom scrollbar styling
-   ========================================== */
-
-/* Webkit browsers (Chrome, Edge, Safari) */
-::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--red-10) !important;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent-dark-red) !important;
-    border-radius: 6px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-red) !important;
-    background-clip: padding-box;
-}
-
-/* Firefox */
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-dark-red) var(--red-10);
+/* Volume display */
+.iconOsdProgressInner {
+    background: var(--jf-palette-primary-light);
 }
 
 /* ==========================================
-   PART 14: ALPHABETICAL PICKER
-   A-Z navigation picker
-   ========================================== */
-
-.alphaPickerButton-selected {
-    background-color: var(--accent-dark-red) !important;
-    color: var(--text-white) !important;
-}
-
-.alphaPickerButton:hover {
-    background-color: var(--red-30) !important;
-    transition: background-color 0.2s ease;
-}
-
-/* ==========================================
-   PART 15: FAVORITES & RATINGS
-   Favorite icons and rating buttons
-   ========================================== */
-
-.ratingButton-icon-withrating,
-.ratingButton.ratingButton-withrating {
-    color: var(--accent-red) !important;
-}
-
-.ratingButton:hover {
-    color: var(--accent-red) !important;
-}
-
-/* Favorite icon */
-.itemAction[data-action="favorite"].favorite {
-    color: var(--accent-red) !important;
-}
-
-/* ==========================================
-   PART 16: FILTERS & SEARCH
-   Filter chips and search results
-   ========================================== */
-
-/* ------------------------------------------
-   Filter chips
-   ------------------------------------------ */
-.filterTab-active,
-.filterButton-active {
-    background-color: var(--accent-dark-red) !important;
-    color: var(--text-white) !important;
-}
-
-.filterTab:hover,
-.filterButton:hover {
-    background-color: var(--red-30) !important;
-}
-
-/* ------------------------------------------
-   Search field
-   ------------------------------------------ */
-.searchResultsContainer .card-hoverable:hover {
-    border-color: var(--accent-red) !important;
-}
-
-/* ==========================================
-   PART 17: DIALOGS & POPUPS
-   Modal dialogs and popup menus
-   ========================================== */
-
-/* ------------------------------------------
-   Dialog header
-   ------------------------------------------ */
-.dialog-title,
-.formDialogHeader {
-    color: var(--accent-red) !important;
-}
-
-/* ------------------------------------------
-   Dialog backdrop with blur
-   ------------------------------------------ */
-.dialogBackdrop {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);  /* Safari */
-    background-color: rgba(0, 0, 0, 0.7) !important;
-}
-
-/* ------------------------------------------
-   Dialog buttons
-   ------------------------------------------ */
-.btnCancel {
-    color: var(--accent-red) !important;
-}
-
-.btnCancel:hover {
-    background-color: var(--red-10) !important;
-}
-
-/* ==========================================
-   PART 18: EDITOR'S CHOICE PLUGIN
+   EDITOR'S CHOICE PLUGIN
    Styling for Editor's Choice plugin slider
    ========================================== */
 
 /* ------------------------------------------
-   IMPORTANT: Keep container background visible
-   Don't set to transparent - preview images must remain visible
+   Play/pause & Navigation buttons (prev/next)
    ------------------------------------------ */
-
-/* Play button in slider */
-.editorsChoice-play-button,
-[class*="editorsChoice"][class*="play"] {
-    background-color: var(--accent-red) !important;
+.editorsChoiceContainer .editorsChoiceScrollButtonsContainer button.splide__arrow,
+.editorsChoiceContainer .editorsChoicePlayPauseContainer button.splide__toggle {
     color: var(--text-white) !important;
-    font-weight: bold;
-    font-size: 1.2em;
-    padding: 14px 40px;
-    border-radius: 4px;
-    border: none;
-    transition: background-color 0.2s ease, filter 0.2s ease;
-    box-shadow: 0 4px 12px rgba(255, 0, 13, 0.4);
 }
 
-.editorsChoice-play-button:hover,
-[class*="editorsChoice"][class*="play"]:hover {
-    background-color: var(--accent-red) !important;
-    filter: brightness(1.2);
-    box-shadow: 0 6px 20px rgba(255, 0, 13, 0.6);
-}
-
-/* ------------------------------------------
-   Navigation buttons (prev/next)
-   ------------------------------------------ */
-.editorsChoice-button,
-.editorsChoice-nav-button,
-[class*="editorsChoice"][class*="button"]:not([class*="play"]) {
-    background-color: rgba(42, 42, 42, 0.6) !important;
-    color: var(--text-white) !important;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    transition: all 0.2s ease;
-}
-
-.editorsChoice-button:hover,
-.editorsChoice-nav-button:hover,
-[class*="editorsChoice"][class*="button"]:not([class*="play"]):hover {
-    background-color: var(--accent-dark-red) !important;
-    border-color: var(--accent-red);
-}
-
-/* ------------------------------------------
-   Slider indicators (dots/pagination)
-   ------------------------------------------ */
-.editorsChoice-indicator,
-.editorsChoice-dot,
-[class*="editorsChoice"][class*="indicator"],
-[class*="editorsChoice"][class*="dot"] {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(255, 255, 255, 0.4) !important;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-/* Active indicator: red */
-.editorsChoice-indicator-active,
-.editorsChoice-dot-active,
-[class*="editorsChoice"][class*="indicator"][class*="active"],
-[class*="editorsChoice"][class*="dot"][class*="active"] {
-    background-color: var(--accent-red) !important;
+.editorsChoiceContainer .editorsChoiceScrollButtonsContainer button.splide__arrow:hover,
+.editorsChoiceContainer .editorsChoicePlayPauseContainer button.splide__toggle:hover {
+    color: var(--jf-palette-primary-light) !important;
+    background-color: var(--red-30) !important;
 }
 
 /* ------------------------------------------
    Text overlays
-   Keep original colors, only add shadows for readability
    ------------------------------------------ */
-.editorsChoice-title,
-[class*="editorsChoice"][class*="title"] {
-    text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.9);
+.editorsChoiceItemsContainer .editorsChoiceItemTitle,
+.editorsChoiceItemsContainer .editorsChoiceItemRating,
+.editorsChoiceItemsContainer .editorsChoiceItemOverview {
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.9);
+}
+
+
+.editorsChoiceItemsContainer .editorsChoiceItemTitle {
     font-size: 3em;
     font-weight: 700;
 }
 
-.editorsChoice-description,
-[class*="editorsChoice"][class*="description"],
-[class*="editorsChoice"][class*="synopsis"] {
-    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
-    font-size: 1.1em;
-}
+.editorsChoiceItemsContainer .editorsChoiceItemLogo {}
 
-/* Rating/meta info: NO color change */
-.editorsChoice-rating,
-[class*="editorsChoice"][class*="rating"] {
+.editorsChoiceItemsContainer .editorsChoiceItemRating {
     font-weight: bold;
 }
 
-/* ------------------------------------------
-   Links in plugin keep original color
-   ------------------------------------------ */
-.editorsChoiceItemBanner a,
-[class*="editorsChoice"] a {
-    color: inherit !important;
-    transition: opacity 0.2s ease;
+.editorsChoiceItemsContainer .editorsChoiceItemOverview {
+    font-size: 1.1em;
 }
-
-.editorsChoiceItemBanner a:hover,
-[class*="editorsChoice"] a:hover {
-    color: inherit !important;
-    opacity: 0.8;
-}
-
-/* ==========================================
-   PART 19: GLOBAL ENHANCEMENTS
-   Universal improvements and effects
-   ========================================== */
-
-/* ------------------------------------------
-   Smooth scrolling
-   ------------------------------------------ */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ------------------------------------------
-   Focus ring for accessibility
-   ------------------------------------------ */
-*:focus-visible {
-    outline: 2px solid var(--accent-red) !important;
-    outline-offset: 2px;
-}
-
-/* ------------------------------------------
-   Text selection
-   ------------------------------------------ */
-::selection {
-    background-color: var(--accent-dark-red) !important;
-    color: var(--text-white) !important;
-}
-
-::-moz-selection {
-    background-color: var(--accent-dark-red) !important;
-    color: var(--text-white) !important;
-}
-
-/* ------------------------------------------
-   Transitions timing function
-   ------------------------------------------ */
-* {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ==========================================
-   PART 20: ADDITIONAL OPTIMIZATIONS
-   Extra refinements and polish
-   ========================================== */
-
-/* ------------------------------------------
-   Raised buttons with shadows
-   ------------------------------------------ */
-.raised {
-    box-shadow: 0 2px 4px rgba(133, 0, 7, 0.3) !important;
-}
-
-.raised:hover {
-    box-shadow: 0 4px 8px rgba(255, 0, 13, 0.4) !important;
-}
-
-/* ------------------------------------------
-   Action sheet (bottom sheet menu)
-   ------------------------------------------ */
-.actionSheetMenuItem:hover {
-    background-color: var(--red-10) !important;
-}
-
-/* ------------------------------------------
-   Range input sliders (general)
-   ------------------------------------------ */
-input[type="range"]::-webkit-slider-thumb {
-    background-color: var(--accent-red) !important;
-}
-
-input[type="range"]::-moz-range-thumb {
-    background-color: var(--accent-red) !important;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, var(--accent-red) 0%, rgba(255, 255, 255, 0.3) 0%);
-}
-
-/* ==========================================
-   PART 21: OPTIONAL EXTENSIONS
-   Uncomment these sections as needed
-   ========================================== */
-
-/* ------------------------------------------
-   Darker background (optional)
-   ------------------------------------------ */
-/*
-body {
-    background-color: #141414 !important;
-}
-
-.backgroundContainer {
-    background-color: #141414 !important;
-}
-*/
-
-/* ------------------------------------------
-   Larger play icons on cards (optional)
-   ------------------------------------------ */
-/*
-.cardOverlayButton-icon {
-    font-size: 3em !important;
-}
-*/
-
-/* ------------------------------------------
-   Stronger blur for backdrop (optional)
-   ------------------------------------------ */
-/*
-.dialogBackdrop {
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-}
-*/
