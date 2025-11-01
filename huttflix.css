@@ -241,6 +241,11 @@
     color: var(--jf-palette-primary-light) !important;
 }
 
+/* background image on details page */
+.backgroundContainer.withBackdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 /* ------------------------------------------
    Loading spinner
    ------------------------------------------ */
